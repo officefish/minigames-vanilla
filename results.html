@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://kit.fontawesome.com/875cec1d0b.js" crossorigin="anonymous"></script>
+  
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./results.styles.css">
+
+    <title>Results</title>
+</head>
+<body>
+    <h1>Your last result: <span id="last">0</span></h1>
+    <div>
+        <h2 class="grid-header" id="counter">Your best results:</h2>
+        <div class="grid-total">
+            <div class="grid-item">Clicker</div>
+            <div class="grid-number" id="clicker1">122</div>
+            <div class="grid-number" id="clicker2">103</div>
+            <div class="grid-number" id="clicker3">94</div>
+            <!-- ... -->
+            <div class="grid-item" >Reaction game</div>
+            <div class="grid-number" id="reaction1" >122</div>
+            <div class="grid-number" id="reaction2">103</div>
+            <div class="grid-number" id="reaction3">94</div>
+             <!-- ... -->
+             <div class="grid-item">Memory game</div>
+             <div class="grid-number" id="memory1">122</div>
+             <div class="grid-number" id="memory2">103</div>
+             <div class="grid-number" id="memory3">94</div>
+        </div>
+    </div>
+  
+    <div class="btn-group">
+        <button id="restart" class="btn btn-primary">Restart</button>
+        <button id="menu" class="btn btn-primary">Back to menu</button>
+    </div>
+</body>
+<script>
+const restart = document.getElementById('restart')
+const menu = document.getElementById('menu')
+
+restart.onclick = () => {
+ console.log('restart')
+ let path = './'
+ const lastGame = localStorage.getItem("last_game")
+ switch (lastGame) {
+    case 'clicker': {
+        path = './games/game1.html'
+        break;
+    }
+    case 'reaction': {
+        path = './games/game2.html'
+        break;
+    }
+    case 'memory': {
+        path = './games/game3.html'
+        break;
+    }
+    default: {
+        path = './games/game1.html'
+    }
+ }
+ window.location.href = path
+}
+
+menu.onclick = () => {
+    window.location.href = "./menu.html"
+}
+
+const game1_bestResults_str = localStorage.getItem("game_1_best_results");
+const game1_bestResults = JSON.parse(game1_bestResults_str)
+const displayClicker1 = document.querySelector('#clicker1')
+const displayClicker2 = document.querySelector('#clicker2')
+const displayClicker3 = document.querySelector('#clicker3')
+
+displayClicker1.textContent = game1_bestResults[0]
+displayClicker2.textContent = game1_bestResults[1]
+displayClicker3.textContent = game1_bestResults[2]
+
+const game2_bestResults_str = localStorage.getItem("game_2_best_results");
+const game2_bestResults = JSON.parse(game2_bestResults_str)
+const displayReaction1 = document.querySelector('#reaction1')
+const displayReaction2 = document.querySelector('#reaction2')
+const displayReaction3 = document.querySelector('#reaction3')
+
+displayReaction1.textContent = `${game2_bestResults[0]}/16`
+displayReaction2.textContent = `${game2_bestResults[1]}/16`
+displayReaction3.textContent = `${game2_bestResults[2]}/16`
+
+
+const game3_bestResults_str = localStorage.getItem("game_3_best_results");
+const game3_bestResults = JSON.parse(game3_bestResults_str)
+const displayMemory1 = document.querySelector('#memory1')
+const displayMemory2 = document.querySelector('#memory2')
+const displayMemory3 = document.querySelector('#memory3')
+
+const toTime = (time) => {
+    // Minutes calculation
+    const minutes = Math.floor((time % 360000) / 6000);
+    // Seconds calculation
+    const seconds = Math.floor((time % 6000) / 100);
+    // Milliseconds calculation
+    const milliseconds = time % 100;
+
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${milliseconds.toString().padStart(2, "0")}`
+   
+} 
+
+displayMemory1.textContent = toTime(game3_bestResults[0])
+displayMemory2.textContent = toTime(game3_bestResults[1])
+displayMemory3.textContent = toTime(game3_bestResults[2])
+
+const lastResult_str = localStorage.getItem("last_result")
+const lastResult = JSON.parse(lastResult_str)
+const displayLast = document.querySelector('#last')
+displayLast.textContent = lastResult
+
+
+
+</script>
+</html>

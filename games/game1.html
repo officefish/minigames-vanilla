@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game 1</title>
+
+    <script src="https://kit.fontawesome.com/875cec1d0b.js" crossorigin="anonymous"></script>
+  
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="game1.styles.css">
+
+</head>
+<body>
+    <div class="screen">
+        <div class="header">
+            <input class="btn btn-primary" type="button" onclick="location.href='../menu.html'" value="Back" /> 
+            <span>Rules: Click as often as you can until the time runs out.</span>
+        </div>
+        <div  class="timewatch">
+            <p id="timer">00:00:01</p>
+        </div>
+        <h1 id="counter">0</h1>
+        <button id="clicker" class="btn joystick">
+            <i class="fa-solid fa-7x fa-computer-mouse text-warning"></i>
+        </button>
+    </div>
+</body>
+<script>
+
+let currentTime = 0
+let counter = 0
+let game = true
+
+const displayTimer = document.querySelector('#timer')
+const displayCounter = document.querySelector('#counter')
+const clicker = document.getElementById('clicker')
+
+clicker.onclick = () => {
+    if (!game) return
+    counter++
+    displayCounter.innerHTML = counter
+}
+
+const gameTime = 1000
+
+const intervalId = setInterval(() => {
+   currentTime++
+   
+   if (currentTime >= gameTime) {
+    finishGame() 
+   }
+
+   const time = gameTime - currentTime
+   const hours = Math.floor(time / 360000)
+   const minutes = Math.floor((time % 360000) / 6000)
+   const seconds = Math.floor((time % 6000) / 100)
+   const milliseconds = time % 100
+   const timeToString = `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}:${milliseconds.toString().padStart(2, "0")}`
+
+   displayTimer.textContent = timeToString;
+  
+}, 10) 
+
+function updateBestResults(lastResult, bestResults) {
+  // Check if the last result is better than any of the best results
+  for (let i = 0; i < bestResults.length; i++) {
+    if (lastResult > bestResults[i]) {
+      // Update the best results array with the new result
+      bestResults.splice(i, 0, lastResult); // Insert the new result at the correct position
+      bestResults.pop(); // Remove the last (smallest) result
+      break; // Exit the loop once the update is done
+    }
+  }
+}
+
+const finishGame = () => {
+    clearInterval(intervalId)
+    game = false
+    
+    let bestResults = localStorage.getItem("game_1_best_results");
+    if (!bestResults) {
+        bestResults = [0, 0, 0]
+    } else {
+        bestResults = JSON.parse(bestResults)
+    }
+    updateBestResults(counter, bestResults)
+    localStorage.setItem("game_1_best_results", JSON.stringify(bestResults))
+
+    //console.log("Updated Best Results:", bestResults)
+
+    localStorage.setItem("last_result", JSON.stringify(counter))
+    localStorage.setItem("last_game", 'clicker')
+
+    window.location.href = '../results.html';
+}
+
+</script>
+</html>

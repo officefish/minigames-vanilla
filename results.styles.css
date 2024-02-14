@@ -1,0 +1,49 @@
+
+.grid-header {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%;
+    height: 3rem;
+}
+
+.grid-total {
+    display: grid; 
+    grid-template-columns: repeat(4, minmax(0, 1fr)); 
+    gap: 0.5rem; 
+}
+
+.grid-number {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    line-height: 1; 
+    font-weight: 700; 
+    color: oklch(var(--p));
+    text-align: right; 
+    width: 100%;
+    font-size: 2rem;
+    border-color: oklch(var(--p));;
+    border: solid;
+}
+
+.grid-item {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%;
+    font-size: 1rem;
+    text-align: left;
+    line-height: 1; 
+    font-weight: 700; 
+    color: oklch(var(--p));
+    border: solid;
+    border-color: oklch(var(--p));;
+}
+
+.btn-group {
+    display: flex; 
+    gap: 1rem; 
+    justify-content: center; 
+    align-items: center; 
+}

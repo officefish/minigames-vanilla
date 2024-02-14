@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction game</title>
+
+    <script src="https://kit.fontawesome.com/875cec1d0b.js" crossorigin="anonymous"></script>
+  
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="game2.styles.css">
+
+
+</head>
+<body>
+    <div class="screen">
+        <div class="header">
+            <input class="btn btn-primary" type="button" onclick="location.href='../menu.html'" value="Back" /> 
+            <span>Rules: Click on lamp for one minute or faster! Click all for best result!</span>
+        </div>
+        <div  class="timewatch">
+            <p id="timer">0/16</p>
+        </div>
+        <div  class="matrix">
+            <!-- accent, win, lose -->
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+        
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+        
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+        
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+        
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+
+            <div class="item">
+                <button class="btn reaction-btn"><i
+                    class="text-content fa-solid fa-3x fa-exclamation text-warning"
+                    ></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+const ITEMS_PATTERN = Array.from({ length: 16 }, (_, i) => ({ index: i }))
+const shuffleItems = (items) => {
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    return items
+}
+const shuffled = shuffleItems([...ITEMS_PATTERN])
+const buttons = document.querySelectorAll('.reaction-btn')
+for (let i = 0; i < buttons.length; ++i) {
+    const item = buttons[i]
+    item.dataset.indexNumber = i
+    item.addEventListener('click', onItemClick)
+}
+function getRandomTime() {
+  return Math.floor(Math.random() * (7000 - 4000 + 1)) + 4000;
+}
+
+function activateItem(item) {
+    item.classList.add('accent')
+    const icon = item.firstChild
+    icon.classList.remove('fa-exclamation')
+    icon.classList.add('fa-lightbulb')
+    currentItem = item
+
+    timeout = setTimeout(() => {
+        if (!currentItem) return
+        currentItem.classList.remove('accent')
+        currentItem.classList.add('lose')
+        currentItem.firstChild.classList.remove('fa-lightbulb')
+        currentItem.firstChild.classList.add('fa-face-meh')
+        currentItem.removeEventListener('click', onItemClick)
+        currentItem = null
+        currentIndex = -1
+        lose += 1
+        if (win + lose === 16) {
+            finishGame()
+        }
+    }, 1000)
+}
+
+function onItemClick(e) {
+    e.preventDefault()
+    const item = e.currentTarget
+    const index = item.dataset.indexNumber
+
+    if (Number(index) === Number(currentIndex)) {
+        clearTimeout(timeout)
+        if (item.classList.contains('accent')) {
+            item.classList.remove('accent')
+            item.classList.add('win')
+            item.firstChild.classList.remove('fa-lightbulb')
+            item.firstChild.classList.add('fa-face-smile')
+            item.removeEventListener('click', onItemClick)
+            currentIndex = -1
+            win += 1
+            displayTimer.innerHTML = `${win}/16`
+            if (win + lose === 16) {
+                finishGame()
+            }
+        }
+    }
+}
+
+
+let win = 0
+let lose = 0
+let limeout
+
+let currentItem
+let currentIndex = -1
+
+const displayTimer = document.querySelector('#timer')
+
+const timer = setInterval(()=> {
+    displayTimer.innerHTML = `${win}/16`
+    const last = shuffled.pop()
+    if (!last) {
+        finishGame()
+        return
+    } else {
+        const lastIndex = last.index
+        currentIndex = lastIndex
+        activateItem(buttons[currentIndex])
+        console.log('Показывается индекс: ' + lastIndex)
+    }
+}, getRandomTime())
+
+function updateBestResults(lastResult, bestResults) {
+  // Check if the last result is better than any of the best results
+  for (let i = 0; i < bestResults.length; i++) {
+    if (lastResult > bestResults[i]) {
+      // Update the best results array with the new result
+      bestResults.splice(i, 0, lastResult); // Insert the new result at the correct position
+      bestResults.pop(); // Remove the last (smallest) result
+      break; // Exit the loop once the update is done
+    }
+  }
+}
+
+function finishGame() {
+    clearInterval(timer)   
+
+    let bestResults = localStorage.getItem("game_2_best_results");
+    if (!bestResults) {
+        bestResults = [0, 0, 0]
+    } else {
+        bestResults = JSON.parse(bestResults)
+    }
+    updateBestResults(win, bestResults)
+    localStorage.setItem("game_2_best_results", JSON.stringify(bestResults))
+
+    localStorage.setItem("last_result", JSON.stringify(`${win}/16`))
+    localStorage.setItem("last_game", 'reaction')
+
+    window.location.href = '../results.html';
+}
+
+</script>
+</html>

@@ -1,0 +1,31 @@
+.item {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.memory-btn {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 6rem; 
+    height: 6rem; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    background-color: oklch(var(--p));
+    color: oklch(var(--b1));
+}
+
+.memory-btn:enabled {
+    background-color: oklch(var(--s));
+}
+
+
+.blocked {
+    background-color: oklch(var(--b3));
+    color: oklch(var(--b2));
+}
+
+.hidden {
+    visibility: hidden;
+}
