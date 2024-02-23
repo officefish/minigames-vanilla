@@ -123,6 +123,11 @@ h2 {
     color: oklch(var(--b1));
 }
 
+.btn-secondary {
+    background-color: oklch(var(--s));
+    color: oklch(var(--b1));
+}
+
 .btn:active {
     transform: scale(0.95);
 }
