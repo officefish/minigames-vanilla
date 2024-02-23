@@ -30,3 +30,7 @@
 .lose {
     background-color: oklch(var(--er));
 }
+
+.spacer {
+    height: 0%;
+}

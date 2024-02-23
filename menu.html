@@ -7,12 +7,24 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="screen">
+    <div class="menu-screen">
         <div class="menu">
+            <div class="userName" id="userNameField"></div>
             <input class="btn btn-primary menu-btn" type="button" onclick="location.href='./games/game1.html'" value="Clicker" />
             <input class="btn btn-primary menu-btn" type="button" onclick="location.href='./games/game2.html'" value="Reaction game" />
             <input class="btn btn-primary menu-btn" type="button" onclick="location.href='./games/game3.html'" value="Memory game" />
         </div>
     </div>
 </body>
+<script>
+  const userNameField = document.getElementById("userNameField")      
+  const userName = localStorage.getItem("userName")
+
+  const currentResult = localStorage.getItem("result")
+
+  const introduce = `Hello ${userName}, you current result: ${currentResult}`
+  userNameField.innerText = introduce
+
+  console.log(userName)
+</script>
 </html>

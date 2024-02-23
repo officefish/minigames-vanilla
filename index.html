@@ -16,4 +16,36 @@
          </div>
     </div>
 </body>
+<script>
+
+    const button = document.querySelector('button')
+    if (button) {
+        button.addEventListener('click', () => {saveUser()})
+    }
+
+    const input = document.querySelector('input')
+
+    function saveUser() {
+        console.log('saveUser called.')
+        const value = input.value
+
+        if (!value.length) {
+            return
+        }
+        
+        localStorage.setItem("userName", value)
+        localStorage.setItem("result", 0)
+
+        window.location.href = './menu.html'
+
+    }
+
+    function keyDownHandler(e) {
+        if (e.code == "Enter") {
+            saveUser()
+        }
+    }
+
+    window.addEventListener('keydown', keyDownHandler)
+</script>
 </html>
