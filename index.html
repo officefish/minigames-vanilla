@@ -36,6 +36,20 @@
         localStorage.setItem("userName", value)
         localStorage.setItem("result", 0)
 
+        /* Rating logic */
+        let users
+        const usersStr = localStorage.getItem("users")
+        if (!usersStr) {
+            users = {}
+        } else {
+            users = JSON.parse(usersStr)
+        }
+        const dateISOString = new Date().toISOString()
+        users[dateISOString] = {userName: value, result: 0}
+
+        localStorage.setItem("currentUser", dateISOString)
+        localStorage.setItem("users", JSON.stringify(users))
+
         window.location.href = './menu.html'
 
     }

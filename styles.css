@@ -231,3 +231,24 @@ h2 {
     font-size: 18px;
 }
 
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rating-header {
+    /* padding-bottom: 10%; */
+    margin: 20px;
+    padding: 1rem;
+    width: 60%;
+    /* white-space: nowrap; */
+    display: flex; 
+    justify-content:space-between; 
+    align-items: center;
+    gap: 1rem; 
+    border: solid 2px;
+    border-radius: 1rem;
+    border-color: oklch(var(--s)); 
+}
+

@@ -13,6 +13,7 @@
             <input class="btn btn-primary menu-btn" type="button" onclick="location.href='./games/game1.html'" value="Clicker" />
             <input class="btn btn-primary menu-btn" type="button" onclick="location.href='./games/game2.html'" value="Reaction game" />
             <input class="btn btn-primary menu-btn" type="button" onclick="location.href='./games/game3.html'" value="Memory game" />
+            <input class="btn btn-primary menu-btn" type="button" onclick="location.href='./rating.html'" value="Best players" />
         </div>
     </div>
 </body>
@@ -20,11 +21,17 @@
   const userNameField = document.getElementById("userNameField")      
   const userName = localStorage.getItem("userName")
 
-  const currentResult = localStorage.getItem("result")
+  const result = +localStorage.getItem("result")
 
-  const introduce = `Hello ${userName}, you current result: ${currentResult}`
+  const introduce = `Hello ${userName}, you current result: ${result}`
   userNameField.innerText = introduce
 
-  console.log(userName)
+  const currentUser = localStorage.getItem("currentUser")
+  const usersStr = localStorage.getItem("users")
+  const users = JSON.parse(usersStr)
+
+  users[currentUser] = { userName, result }
+  localStorage.setItem("users", JSON.stringify(users))
+
 </script>
 </html>

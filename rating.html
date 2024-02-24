@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./rating.styles.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="screen">
+        <div class="rating-header">
+            <input class="btn btn-primary" type="button" onclick="location.href='../menu.html'" value="Back" /> 
+            <h2 class="truncate">Top 10 Results</h2>
+        </div>
+    
+        <div id="bestUsers" class="grid-total">
+            <div class="grid-item">User</div>
+            <div class="grid-item">Result</div>
+        </div>    
+    </div>
+   
+
+</body>
+<script>
+    const usersStr = localStorage.getItem("users")
+    const usersData = JSON.parse(usersStr)
+    const users = Object.values(usersData)
+    users.sort((a, b) => b.result - a.result)
+
+    const tableBody = document.getElementById('bestUsers')
+
+    // Displaying the top 10 results in the table
+    for (let i = 0; i < 10 && i < users.length; i++) {
+       const userNameCell = document.createElement('div')
+       userNameCell.classList.add("grid-item")
+       const resultCell = document.createElement('div')
+       resultCell.classList.add("grid-item")
+
+       userNameCell.textContent = users[i].userName
+       resultCell.textContent = users[i].result
+        
+       tableBody.appendChild(userNameCell)
+       tableBody.appendChild(resultCell)
+    }
+
+</script>
+</html>
